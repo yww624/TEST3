@@ -1,0 +1,2 @@
+lr,step,time,train_loss,train_metric,val_loss,val_metric
+0.0100,500.0-best,1639.1454,-0.8979,,0.0000,0.0000

@@ -1,0 +1,508 @@
+PinkBlack :: args : {'gpu': 0, 'batch_size': 12, 'train_signal': '/home/azureuser/env/utils/complex-new/clean/', 'train_noise': '/home/azureuser/env/utils/complex-new/noise/', 'test_signal': '/home/azureuser/env/utils/complex-new/valclean', 'test_noise': '/home/azureuser/env/utils/complex-new/valnoise/', 'sequence_length': 16384, 'num_step': 20000, 'validation_interval': 500, 'num_workers': 0, 'ckpt': 'unet/ckpt.pth', 'model_complexity': 45, 'lr': 0.01, 'num_signal': 0, 'num_noise': 0, 'optimizer': 'adam', 'lr_decay': 0.5, 'momentum': 0, 'multi_gpu': False, 'complex': True, 'model_depth': 20, 'swa': False, 'loss': 'wsdr', 'log_amp': False, 'metric': 'pesq', 'train_dataset': 'se', 'valid_dataset': 'se', 'preload': False, 'padding_mode': 'reflect'}
+Got 94930 signals and 94930 mixtures.
+Got 10709 signals and 10709 mixtures.
+SourceSeparator(
+  (net): Sequential(
+    (0): STFT(
+      (stft): STFT(fft_length=512, hop_length=128, win_length=None)(center=True, pad_mode=reflect, normalized=False, onesided=True)
+      (amp2db): AmplitudeToDb(ref=1.0, amin=1e-07)
+    )
+    (1): UNet(
+      (encoder0): Encoder(
+        (conv): ComplexConv2d(
+          (conv_re): Conv2d(1, 31, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0))
+          (conv_im): Conv2d(1, 31, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(31, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(31, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (encoder1): Encoder(
+        (conv): ComplexConv2d(
+          (conv_re): Conv2d(31, 31, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3))
+          (conv_im): Conv2d(31, 31, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(31, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(31, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (encoder2): Encoder(
+        (conv): ComplexConv2d(
+          (conv_re): Conv2d(31, 62, kernel_size=(6, 4), stride=(2, 2), padding=[2, 1])
+          (conv_im): Conv2d(31, 62, kernel_size=(6, 4), stride=(2, 2), padding=[2, 1])
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (encoder3): Encoder(
+        (conv): ComplexConv2d(
+          (conv_re): Conv2d(62, 62, kernel_size=(7, 5), stride=(2, 1), padding=[3, 2])
+          (conv_im): Conv2d(62, 62, kernel_size=(7, 5), stride=(2, 1), padding=[3, 2])
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (encoder4): Encoder(
+        (conv): ComplexConv2d(
+          (conv_re): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+          (conv_im): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (encoder5): Encoder(
+        (conv): ComplexConv2d(
+          (conv_re): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+          (conv_im): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (encoder6): Encoder(
+        (conv): ComplexConv2d(
+          (conv_re): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+          (conv_im): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (encoder7): Encoder(
+        (conv): ComplexConv2d(
+          (conv_re): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+          (conv_im): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (encoder8): Encoder(
+        (conv): ComplexConv2d(
+          (conv_re): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+          (conv_im): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (encoder9): Encoder(
+        (conv): ComplexConv2d(
+          (conv_re): Conv2d(62, 128, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+          (conv_im): Conv2d(62, 128, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (decoder0): Decoder(
+        (transconv): ComplexConvTranspose2d(
+          (tconv_re): ConvTranspose2d(128, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+          (tconv_im): ConvTranspose2d(128, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (decoder1): Decoder(
+        (transconv): ComplexConvTranspose2d(
+          (tconv_re): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+          (tconv_im): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (decoder2): Decoder(
+        (transconv): ComplexConvTranspose2d(
+          (tconv_re): ConvTranspose2d(124, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+          (tconv_im): ConvTranspose2d(124, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (decoder3): Decoder(
+        (transconv): ComplexConvTranspose2d(
+          (tconv_re): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+          (tconv_im): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (decoder4): Decoder(
+        (transconv): ComplexConvTranspose2d(
+          (tconv_re): ConvTranspose2d(124, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+          (tconv_im): ConvTranspose2d(124, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (decoder5): Decoder(
+        (transconv): ComplexConvTranspose2d(
+          (tconv_re): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+          (tconv_im): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (decoder6): Decoder(
+        (transconv): ComplexConvTranspose2d(
+          (tconv_re): ConvTranspose2d(124, 62, kernel_size=(6, 3), stride=(2, 1), padding=(2, 1))
+          (tconv_im): ConvTranspose2d(124, 62, kernel_size=(6, 3), stride=(2, 1), padding=(2, 1))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (decoder7): Decoder(
+        (transconv): ComplexConvTranspose2d(
+          (tconv_re): ConvTranspose2d(124, 62, kernel_size=(7, 5), stride=(2, 2), padding=(2, 1))
+          (tconv_im): ConvTranspose2d(124, 62, kernel_size=(7, 5), stride=(2, 2), padding=(2, 1))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (decoder8): Decoder(
+        (transconv): ComplexConvTranspose2d(
+          (tconv_re): ConvTranspose2d(93, 62, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3))
+          (tconv_im): ConvTranspose2d(93, 62, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (decoder9): Decoder(
+        (transconv): ComplexConvTranspose2d(
+          (tconv_re): ConvTranspose2d(93, 62, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0))
+          (tconv_im): ConvTranspose2d(93, 62, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0))
+        )
+        (bn): ComplexBatchNorm2d(
+          (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+        (relu): LeakyReLU(negative_slope=0.01, inplace)
+      )
+      (linear): ComplexConv2d(
+        (conv_re): Conv2d(62, 1, kernel_size=(1, 1), stride=(1, 1))
+        (conv_im): Conv2d(62, 1, kernel_size=(1, 1), stride=(1, 1))
+      )
+      (decoders): ModuleList(
+        (0): Decoder(
+          (transconv): ComplexConvTranspose2d(
+            (tconv_re): ConvTranspose2d(128, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+            (tconv_im): ConvTranspose2d(128, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (1): Decoder(
+          (transconv): ComplexConvTranspose2d(
+            (tconv_re): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+            (tconv_im): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (2): Decoder(
+          (transconv): ComplexConvTranspose2d(
+            (tconv_re): ConvTranspose2d(124, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+            (tconv_im): ConvTranspose2d(124, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (3): Decoder(
+          (transconv): ComplexConvTranspose2d(
+            (tconv_re): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+            (tconv_im): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (4): Decoder(
+          (transconv): ComplexConvTranspose2d(
+            (tconv_re): ConvTranspose2d(124, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+            (tconv_im): ConvTranspose2d(124, 62, kernel_size=(4, 3), stride=(2, 1), padding=(1, 1))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (5): Decoder(
+          (transconv): ComplexConvTranspose2d(
+            (tconv_re): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+            (tconv_im): ConvTranspose2d(124, 62, kernel_size=(4, 2), stride=(2, 2), padding=(1, 0))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (6): Decoder(
+          (transconv): ComplexConvTranspose2d(
+            (tconv_re): ConvTranspose2d(124, 62, kernel_size=(6, 3), stride=(2, 1), padding=(2, 1))
+            (tconv_im): ConvTranspose2d(124, 62, kernel_size=(6, 3), stride=(2, 1), padding=(2, 1))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (7): Decoder(
+          (transconv): ComplexConvTranspose2d(
+            (tconv_re): ConvTranspose2d(124, 62, kernel_size=(7, 5), stride=(2, 2), padding=(2, 1))
+            (tconv_im): ConvTranspose2d(124, 62, kernel_size=(7, 5), stride=(2, 2), padding=(2, 1))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (8): Decoder(
+          (transconv): ComplexConvTranspose2d(
+            (tconv_re): ConvTranspose2d(93, 62, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3))
+            (tconv_im): ConvTranspose2d(93, 62, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (9): Decoder(
+          (transconv): ComplexConvTranspose2d(
+            (tconv_re): ConvTranspose2d(93, 62, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0))
+            (tconv_im): ConvTranspose2d(93, 62, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+      )
+      (encoders): ModuleList(
+        (0): Encoder(
+          (conv): ComplexConv2d(
+            (conv_re): Conv2d(1, 31, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0))
+            (conv_im): Conv2d(1, 31, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(31, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(31, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (1): Encoder(
+          (conv): ComplexConv2d(
+            (conv_re): Conv2d(31, 31, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3))
+            (conv_im): Conv2d(31, 31, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3))
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(31, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(31, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (2): Encoder(
+          (conv): ComplexConv2d(
+            (conv_re): Conv2d(31, 62, kernel_size=(6, 4), stride=(2, 2), padding=[2, 1])
+            (conv_im): Conv2d(31, 62, kernel_size=(6, 4), stride=(2, 2), padding=[2, 1])
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (3): Encoder(
+          (conv): ComplexConv2d(
+            (conv_re): Conv2d(62, 62, kernel_size=(7, 5), stride=(2, 1), padding=[3, 2])
+            (conv_im): Conv2d(62, 62, kernel_size=(7, 5), stride=(2, 1), padding=[3, 2])
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (4): Encoder(
+          (conv): ComplexConv2d(
+            (conv_re): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+            (conv_im): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (5): Encoder(
+          (conv): ComplexConv2d(
+            (conv_re): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+            (conv_im): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (6): Encoder(
+          (conv): ComplexConv2d(
+            (conv_re): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+            (conv_im): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (7): Encoder(
+          (conv): ComplexConv2d(
+            (conv_re): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+            (conv_im): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (8): Encoder(
+          (conv): ComplexConv2d(
+            (conv_re): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+            (conv_im): Conv2d(62, 62, kernel_size=(5, 3), stride=(2, 2), padding=[2, 1])
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(62, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+        (9): Encoder(
+          (conv): ComplexConv2d(
+            (conv_re): Conv2d(62, 128, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+            (conv_im): Conv2d(62, 128, kernel_size=(5, 3), stride=(2, 1), padding=[2, 1])
+          )
+          (bn): ComplexBatchNorm2d(
+            (bn_re): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (bn_im): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+          (relu): LeakyReLU(negative_slope=0.01, inplace)
+        )
+      )
+    )
+    (2): ApplyMask(
+      (amp2db): DbToAmplitude(ref=1.0)
+    )
+    (3): ISTFT(
+      (amp2db): DbToAmplitude(ref=1.0)
+    )
+  )
+)
+|---------|---------|---------|---------|---------|---------|---------|
+|   step  |train_loss|train_metric| val_loss|val_metric|    lr   |   time  |
+|---------|---------|---------|---------|---------|---------|---------|
+  0%|          | 0/500 [00:00<?, ?it/s]  0%|          | 1/500 [00:03<28:20,  3.41s/it]  0%|          | 2/500 [00:06<27:45,  3.34s/it]  1%|          | 3/500 [00:09<27:15,  3.29s/it]  1%|          | 4/500 [00:12<26:59,  3.27s/it]  1%|1         | 5/500 [00:16<26:50,  3.25s/it]  1%|1         | 6/500 [00:19<26:35,  3.23s/it]  1%|1         | 7/500 [00:22<26:30,  3.23s/it]  2%|1         | 8/500 [00:25<26:23,  3.22s/it]  2%|1         | 9/500 [00:28<26:14,  3.21s/it]  2%|2         | 10/500 [00:32<26:13,  3.21s/it]  2%|2         | 11/500 [00:35<26:08,  3.21s/it]  2%|2         | 12/500 [00:38<26:02,  3.20s/it]  3%|2         | 13/500 [00:41<25:59,  3.20s/it]  3%|2         | 14/500 [00:44<25:52,  3.19s/it]  3%|3         | 15/500 [00:48<25:57,  3.21s/it]  3%|3         | 16/500 [00:51<25:54,  3.21s/it]  3%|3         | 17/500 [00:54<25:53,  3.22s/it]  4%|3         | 18/500 [00:57<25:48,  3.21s/it]  4%|3         | 19/500 [01:01<25:45,  3.21s/it]/home/azureuser/anaconda3/envs/coco/lib/python3.6/site-packages/pypesq/__init__.py:53: UserWarning: Processing Error! return NaN
+  warnings.warn('Processing Error! return NaN')
+  4%|4         | 20/500 [01:04<25:37,  3.20s/it]  4%|4         | 21/500 [01:07<25:40,  3.22s/it]  4%|4         | 22/500 [01:10<25:50,  3.24s/it]  5%|4         | 23/500 [01:14<25:41,  3.23s/it]  5%|4         | 24/500 [01:17<25:34,  3.22s/it]  5%|5         | 25/500 [01:20<25:29,  3.22s/it]  5%|5         | 26/500 [01:23<25:26,  3.22s/it]  5%|5         | 27/500 [01:26<25:19,  3.21s/it]  6%|5         | 28/500 [01:30<25:14,  3.21s/it]  6%|5         | 29/500 [01:33<25:12,  3.21s/it]  6%|6         | 30/500 [01:36<25:14,  3.22s/it]  6%|6         | 31/500 [01:39<25:11,  3.22s/it]  6%|6         | 32/500 [01:42<25:07,  3.22s/it]  7%|6         | 33/500 [01:46<25:03,  3.22s/it]  7%|6         | 34/500 [01:49<24:59,  3.22s/it]  7%|7         | 35/500 [01:52<24:51,  3.21s/it]  7%|7         | 36/500 [01:55<24:52,  3.22s/it]  7%|7         | 37/500 [01:59<24:48,  3.21s/it]  8%|7         | 38/500 [02:02<24:47,  3.22s/it]  8%|7         | 39/500 [02:05<24:46,  3.22s/it]  8%|8         | 40/500 [02:08<24:45,  3.23s/it]  8%|8         | 41/500 [02:11<24:39,  3.22s/it]  8%|8         | 42/500 [02:15<24:40,  3.23s/it]  9%|8         | 43/500 [02:18<24:32,  3.22s/it]  9%|8         | 44/500 [02:21<24:31,  3.23s/it]  9%|9         | 45/500 [02:24<24:28,  3.23s/it]  9%|9         | 46/500 [02:28<24:29,  3.24s/it]  9%|9         | 47/500 [02:31<24:22,  3.23s/it] 10%|9         | 48/500 [02:34<24:19,  3.23s/it] 10%|9         | 49/500 [02:37<24:14,  3.22s/it] 10%|#         | 50/500 [02:40<24:11,  3.23s/it] 10%|#         | 51/500 [02:44<24:12,  3.24s/it] 10%|#         | 52/500 [02:47<24:08,  3.23s/it] 11%|#         | 53/500 [02:50<24:02,  3.23s/it] 11%|#         | 54/500 [02:53<24:00,  3.23s/it] 11%|#1        | 55/500 [02:57<23:59,  3.24s/it] 11%|#1        | 56/500 [03:00<23:52,  3.23s/it] 11%|#1        | 57/500 [03:03<23:45,  3.22s/it] 12%|#1        | 58/500 [03:06<23:42,  3.22s/it] 12%|#1        | 59/500 [03:10<23:43,  3.23s/it] 12%|#2        | 60/500 [03:13<23:40,  3.23s/it] 12%|#2        | 61/500 [03:16<23:42,  3.24s/it] 12%|#2        | 62/500 [03:19<23:36,  3.23s/it] 13%|#2        | 63/500 [03:23<23:33,  3.23s/it] 13%|#2        | 64/500 [03:26<23:33,  3.24s/it] 13%|#3        | 65/500 [03:29<23:35,  3.25s/it] 13%|#3        | 66/500 [03:32<23:29,  3.25s/it] 13%|#3        | 67/500 [03:35<23:22,  3.24s/it] 14%|#3        | 68/500 [03:39<23:17,  3.23s/it] 14%|#3        | 69/500 [03:42<23:14,  3.23s/it] 14%|#4        | 70/500 [03:45<23:11,  3.24s/it] 14%|#4        | 71/500 [03:48<23:08,  3.24s/it] 14%|#4        | 72/500 [03:52<23:05,  3.24s/it] 15%|#4        | 73/500 [03:55<23:03,  3.24s/it] 15%|#4        | 74/500 [03:58<23:02,  3.24s/it] 15%|#5        | 75/500 [04:01<23:02,  3.25s/it] 15%|#5        | 76/500 [04:05<23:00,  3.26s/it] 15%|#5        | 77/500 [04:08<22:57,  3.26s/it] 16%|#5        | 78/500 [04:11<22:50,  3.25s/it] 16%|#5        | 79/500 [04:14<22:47,  3.25s/it] 16%|#6        | 80/500 [04:18<22:41,  3.24s/it] 16%|#6        | 81/500 [04:21<22:35,  3.24s/it] 16%|#6        | 82/500 [04:24<22:32,  3.24s/it] 17%|#6        | 83/500 [04:27<22:31,  3.24s/it] 17%|#6        | 84/500 [04:31<22:28,  3.24s/it] 17%|#7        | 85/500 [04:34<22:25,  3.24s/it] 17%|#7        | 86/500 [04:37<22:21,  3.24s/it] 17%|#7        | 87/500 [04:40<22:20,  3.25s/it] 18%|#7        | 88/500 [04:44<22:20,  3.25s/it] 18%|#7        | 89/500 [04:47<22:15,  3.25s/it] 18%|#8        | 90/500 [04:50<22:13,  3.25s/it] 18%|#8        | 91/500 [04:53<22:08,  3.25s/it] 18%|#8        | 92/500 [04:57<22:08,  3.26s/it] 19%|#8        | 93/500 [05:00<22:01,  3.25s/it] 19%|#8        | 94/500 [05:03<21:58,  3.25s/it] 19%|#9        | 95/500 [05:06<21:57,  3.25s/it] 19%|#9        | 96/500 [05:10<21:50,  3.24s/it] 19%|#9        | 97/500 [05:13<21:46,  3.24s/it] 20%|#9        | 98/500 [05:16<21:44,  3.25s/it] 20%|#9        | 99/500 [05:19<21:38,  3.24s/it] 20%|##        | 100/500 [05:23<21:34,  3.24s/it] 20%|##        | 101/500 [05:26<21:31,  3.24s/it] 20%|##        | 102/500 [05:29<21:30,  3.24s/it] 21%|##        | 103/500 [05:32<21:27,  3.24s/it] 21%|##        | 104/500 [05:36<21:23,  3.24s/it] 21%|##1       | 105/500 [05:39<21:20,  3.24s/it] 21%|##1       | 106/500 [05:42<21:18,  3.25s/it] 21%|##1       | 107/500 [05:45<21:13,  3.24s/it] 22%|##1       | 108/500 [05:49<21:14,  3.25s/it] 22%|##1       | 109/500 [05:52<21:13,  3.26s/it] 22%|##2       | 110/500 [05:55<21:14,  3.27s/it] 22%|##2       | 111/500 [05:58<21:09,  3.26s/it] 22%|##2       | 112/500 [06:02<21:05,  3.26s/it] 23%|##2       | 113/500 [06:05<21:07,  3.27s/it] 23%|##2       | 114/500 [06:08<21:08,  3.29s/it] 23%|##3       | 115/500 [06:11<20:58,  3.27s/it] 23%|##3       | 116/500 [06:15<21:02,  3.29s/it] 23%|##3       | 117/500 [06:18<20:52,  3.27s/it] 24%|##3       | 118/500 [06:21<20:45,  3.26s/it] 24%|##3       | 119/500 [06:24<20:40,  3.26s/it] 24%|##4       | 120/500 [06:28<20:34,  3.25s/it] 24%|##4       | 121/500 [06:31<20:31,  3.25s/it] 24%|##4       | 122/500 [06:34<20:29,  3.25s/it] 25%|##4       | 123/500 [06:38<20:28,  3.26s/it] 25%|##4       | 124/500 [06:41<20:21,  3.25s/it] 25%|##5       | 125/500 [06:44<20:18,  3.25s/it] 25%|##5       | 126/500 [06:47<20:13,  3.24s/it] 25%|##5       | 127/500 [06:51<20:15,  3.26s/it] 26%|##5       | 128/500 [06:54<20:11,  3.26s/it] 26%|##5       | 129/500 [06:57<20:03,  3.25s/it] 26%|##6       | 130/500 [07:00<19:59,  3.24s/it] 26%|##6       | 131/500 [07:03<19:57,  3.25s/it] 26%|##6       | 132/500 [07:07<19:52,  3.24s/it] 27%|##6       | 133/500 [07:10<19:52,  3.25s/it] 27%|##6       | 134/500 [07:13<19:50,  3.25s/it] 27%|##7       | 135/500 [07:16<19:46,  3.25s/it] 27%|##7       | 136/500 [07:20<19:41,  3.24s/it] 27%|##7       | 137/500 [07:23<19:39,  3.25s/it] 28%|##7       | 138/500 [07:26<19:37,  3.25s/it] 28%|##7       | 139/500 [07:29<19:32,  3.25s/it] 28%|##8       | 140/500 [07:33<19:31,  3.25s/it] 28%|##8       | 141/500 [07:36<19:26,  3.25s/it] 28%|##8       | 142/500 [07:39<19:25,  3.25s/it] 29%|##8       | 143/500 [07:42<19:21,  3.25s/it] 29%|##8       | 144/500 [07:46<19:18,  3.26s/it] 29%|##9       | 145/500 [07:49<19:15,  3.26s/it] 29%|##9       | 146/500 [07:52<19:12,  3.26s/it] 29%|##9       | 147/500 [07:56<19:12,  3.26s/it] 30%|##9       | 148/500 [07:59<19:07,  3.26s/it] 30%|##9       | 149/500 [08:02<19:04,  3.26s/it] 30%|###       | 150/500 [08:05<19:02,  3.27s/it] 30%|###       | 151/500 [08:09<19:00,  3.27s/it] 30%|###       | 152/500 [08:12<18:59,  3.27s/it] 31%|###       | 153/500 [08:15<18:53,  3.27s/it] 31%|###       | 154/500 [08:18<18:48,  3.26s/it] 31%|###1      | 155/500 [08:22<18:45,  3.26s/it] 31%|###1      | 156/500 [08:25<18:40,  3.26s/it] 31%|###1      | 157/500 [08:28<18:37,  3.26s/it] 32%|###1      | 158/500 [08:31<18:32,  3.25s/it] 32%|###1      | 159/500 [08:35<18:32,  3.26s/it] 32%|###2      | 160/500 [08:38<18:26,  3.25s/it] 32%|###2      | 161/500 [08:41<18:24,  3.26s/it] 32%|###2      | 162/500 [08:44<18:17,  3.25s/it] 33%|###2      | 163/500 [08:48<18:15,  3.25s/it] 33%|###2      | 164/500 [08:51<18:10,  3.24s/it] 33%|###3      | 165/500 [08:54<18:08,  3.25s/it] 33%|###3      | 166/500 [08:57<18:06,  3.25s/it] 33%|###3      | 167/500 [09:01<18:06,  3.26s/it] 34%|###3      | 168/500 [09:04<18:03,  3.26s/it] 34%|###3      | 169/500 [09:07<17:58,  3.26s/it] 34%|###4      | 170/500 [09:10<17:52,  3.25s/it] 34%|###4      | 171/500 [09:14<17:47,  3.25s/it] 34%|###4      | 172/500 [09:17<17:46,  3.25s/it] 35%|###4      | 173/500 [09:20<17:44,  3.25s/it] 35%|###4      | 174/500 [09:23<17:40,  3.25s/it] 35%|###5      | 175/500 [09:27<17:35,  3.25s/it] 35%|###5      | 176/500 [09:30<17:33,  3.25s/it] 35%|###5      | 177/500 [09:33<17:29,  3.25s/it] 36%|###5      | 178/500 [09:36<17:27,  3.25s/it] 36%|###5      | 179/500 [09:40<17:24,  3.25s/it] 36%|###6      | 180/500 [09:43<17:22,  3.26s/it] 36%|###6      | 181/500 [09:46<17:21,  3.27s/it] 36%|###6      | 182/500 [09:50<17:18,  3.27s/it] 37%|###6      | 183/500 [09:53<17:16,  3.27s/it] 37%|###6      | 184/500 [09:56<17:10,  3.26s/it] 37%|###7      | 185/500 [09:59<17:06,  3.26s/it] 37%|###7      | 186/500 [10:03<17:02,  3.26s/it] 37%|###7      | 187/500 [10:06<16:58,  3.25s/it] 38%|###7      | 188/500 [10:09<16:55,  3.25s/it] 38%|###7      | 189/500 [10:12<16:51,  3.25s/it] 38%|###8      | 190/500 [10:16<16:46,  3.25s/it] 38%|###8      | 191/500 [10:19<16:43,  3.25s/it] 38%|###8      | 192/500 [10:22<16:42,  3.26s/it] 39%|###8      | 193/500 [10:25<16:37,  3.25s/it] 39%|###8      | 194/500 [10:29<16:33,  3.25s/it] 39%|###9      | 195/500 [10:32<16:29,  3.25s/it] 39%|###9      | 196/500 [10:35<16:27,  3.25s/it] 39%|###9      | 197/500 [10:38<16:25,  3.25s/it] 40%|###9      | 198/500 [10:42<16:26,  3.27s/it] 40%|###9      | 199/500 [10:45<16:20,  3.26s/it] 40%|####      | 200/500 [10:48<16:17,  3.26s/it] 40%|####      | 201/500 [10:51<16:15,  3.26s/it] 40%|####      | 202/500 [10:55<16:15,  3.27s/it] 41%|####      | 203/500 [10:58<16:07,  3.26s/it] 41%|####      | 204/500 [11:01<16:05,  3.26s/it] 41%|####1     | 205/500 [11:04<16:03,  3.26s/it] 41%|####1     | 206/500 [11:08<15:58,  3.26s/it] 41%|####1     | 207/500 [11:11<15:55,  3.26s/it] 42%|####1     | 208/500 [11:14<15:54,  3.27s/it] 42%|####1     | 209/500 [11:18<15:51,  3.27s/it] 42%|####2     | 210/500 [11:21<15:48,  3.27s/it] 42%|####2     | 211/500 [11:24<15:43,  3.27s/it] 42%|####2     | 212/500 [11:27<15:38,  3.26s/it] 43%|####2     | 213/500 [11:30<15:32,  3.25s/it] 43%|####2     | 214/500 [11:34<15:30,  3.25s/it] 43%|####3     | 215/500 [11:37<15:25,  3.25s/it] 43%|####3     | 216/500 [11:40<15:22,  3.25s/it] 43%|####3     | 217/500 [11:43<15:19,  3.25s/it] 44%|####3     | 218/500 [11:47<15:16,  3.25s/it] 44%|####3     | 219/500 [11:50<15:15,  3.26s/it] 44%|####4     | 220/500 [11:53<15:12,  3.26s/it] 44%|####4     | 221/500 [11:57<15:09,  3.26s/it] 44%|####4     | 222/500 [12:00<15:06,  3.26s/it] 45%|####4     | 223/500 [12:03<15:02,  3.26s/it] 45%|####4     | 224/500 [12:06<14:56,  3.25s/it] 45%|####5     | 225/500 [12:10<14:52,  3.24s/it] 45%|####5     | 226/500 [12:13<14:49,  3.25s/it] 45%|####5     | 227/500 [12:16<14:45,  3.24s/it] 46%|####5     | 228/500 [12:19<14:42,  3.25s/it] 46%|####5     | 229/500 [12:23<14:41,  3.25s/it] 46%|####6     | 230/500 [12:26<14:36,  3.24s/it] 46%|####6     | 231/500 [12:29<14:31,  3.24s/it] 46%|####6     | 232/500 [12:32<14:27,  3.24s/it] 47%|####6     | 233/500 [12:36<14:30,  3.26s/it] 47%|####6     | 234/500 [12:39<14:24,  3.25s/it] 47%|####6     | 235/500 [12:42<14:21,  3.25s/it] 47%|####7     | 236/500 [12:45<14:16,  3.24s/it] 47%|####7     | 237/500 [12:48<14:11,  3.24s/it] 48%|####7     | 238/500 [12:52<14:08,  3.24s/it] 48%|####7     | 239/500 [12:55<14:06,  3.24s/it] 48%|####8     | 240/500 [12:58<14:06,  3.26s/it] 48%|####8     | 241/500 [13:01<14:01,  3.25s/it] 48%|####8     | 242/500 [13:05<13:57,  3.24s/it] 49%|####8     | 243/500 [13:08<13:55,  3.25s/it] 49%|####8     | 244/500 [13:11<13:53,  3.26s/it] 49%|####9     | 245/500 [13:14<13:50,  3.26s/it] 49%|####9     | 246/500 [13:18<13:48,  3.26s/it] 49%|####9     | 247/500 [13:21<13:47,  3.27s/it] 50%|####9     | 248/500 [13:24<13:41,  3.26s/it] 50%|####9     | 249/500 [13:28<13:39,  3.27s/it] 50%|#####     | 250/500 [13:31<13:34,  3.26s/it] 50%|#####     | 251/500 [13:34<13:28,  3.25s/it] 50%|#####     | 252/500 [13:37<13:25,  3.25s/it] 51%|#####     | 253/500 [13:41<13:20,  3.24s/it] 51%|#####     | 254/500 [13:44<13:19,  3.25s/it] 51%|#####1    | 255/500 [13:47<13:14,  3.24s/it] 51%|#####1    | 256/500 [13:50<13:12,  3.25s/it] 51%|#####1    | 257/500 [13:54<13:11,  3.26s/it] 52%|#####1    | 258/500 [13:57<13:05,  3.25s/it] 52%|#####1    | 259/500 [14:00<13:02,  3.25s/it] 52%|#####2    | 260/500 [14:03<13:00,  3.25s/it] 52%|#####2    | 261/500 [14:07<12:59,  3.26s/it] 52%|#####2    | 262/500 [14:10<12:54,  3.25s/it] 53%|#####2    | 263/500 [14:13<12:52,  3.26s/it] 53%|#####2    | 264/500 [14:16<12:49,  3.26s/it] 53%|#####3    | 265/500 [14:20<12:46,  3.26s/it] 53%|#####3    | 266/500 [14:23<12:43,  3.26s/it] 53%|#####3    | 267/500 [14:26<12:38,  3.26s/it] 54%|#####3    | 268/500 [14:29<12:34,  3.25s/it] 54%|#####3    | 269/500 [14:33<12:31,  3.25s/it] 54%|#####4    | 270/500 [14:36<12:30,  3.26s/it] 54%|#####4    | 271/500 [14:39<12:25,  3.26s/it] 54%|#####4    | 272/500 [14:42<12:22,  3.26s/it] 55%|#####4    | 273/500 [14:46<12:19,  3.26s/it] 55%|#####4    | 274/500 [14:49<12:15,  3.26s/it] 55%|#####5    | 275/500 [14:52<12:13,  3.26s/it] 55%|#####5    | 276/500 [14:55<12:13,  3.27s/it] 55%|#####5    | 277/500 [14:59<12:08,  3.27s/it] 56%|#####5    | 278/500 [15:02<12:04,  3.26s/it] 56%|#####5    | 279/500 [15:05<12:02,  3.27s/it] 56%|#####6    | 280/500 [15:09<11:58,  3.27s/it] 56%|#####6    | 281/500 [15:12<11:57,  3.27s/it] 56%|#####6    | 282/500 [15:15<11:53,  3.27s/it] 57%|#####6    | 283/500 [15:18<11:48,  3.27s/it] 57%|#####6    | 284/500 [15:22<11:47,  3.28s/it] 57%|#####6    | 285/500 [15:25<11:44,  3.28s/it] 57%|#####7    | 286/500 [15:28<11:40,  3.27s/it] 57%|#####7    | 287/500 [15:31<11:37,  3.27s/it] 58%|#####7    | 288/500 [15:35<11:31,  3.26s/it] 58%|#####7    | 289/500 [15:38<11:30,  3.27s/it] 58%|#####8    | 290/500 [15:41<11:25,  3.26s/it] 58%|#####8    | 291/500 [15:44<11:21,  3.26s/it] 58%|#####8    | 292/500 [15:48<11:20,  3.27s/it] 59%|#####8    | 293/500 [15:51<11:15,  3.27s/it] 59%|#####8    | 294/500 [15:54<11:15,  3.28s/it] 59%|#####8    | 295/500 [15:58<11:10,  3.27s/it] 59%|#####9    | 296/500 [16:01<11:06,  3.27s/it] 59%|#####9    | 297/500 [16:04<11:03,  3.27s/it] 60%|#####9    | 298/500 [16:07<10:57,  3.26s/it] 60%|#####9    | 299/500 [16:11<10:53,  3.25s/it] 60%|######    | 300/500 [16:14<10:49,  3.25s/it] 60%|######    | 301/500 [16:17<10:45,  3.25s/it] 60%|######    | 302/500 [16:20<10:43,  3.25s/it] 61%|######    | 303/500 [16:24<10:38,  3.24s/it] 61%|######    | 304/500 [16:27<10:35,  3.24s/it] 61%|######1   | 305/500 [16:30<10:31,  3.24s/it] 61%|######1   | 306/500 [16:33<10:29,  3.25s/it] 61%|######1   | 307/500 [16:37<10:26,  3.25s/it] 62%|######1   | 308/500 [16:40<10:23,  3.25s/it] 62%|######1   | 309/500 [16:43<10:22,  3.26s/it] 62%|######2   | 310/500 [16:46<10:19,  3.26s/it] 62%|######2   | 311/500 [16:50<10:17,  3.27s/it] 62%|######2   | 312/500 [16:53<10:13,  3.26s/it] 63%|######2   | 313/500 [16:56<10:09,  3.26s/it] 63%|######2   | 314/500 [16:59<10:05,  3.26s/it] 63%|######3   | 315/500 [17:03<10:02,  3.26s/it] 63%|######3   | 316/500 [17:06<09:59,  3.26s/it] 63%|######3   | 317/500 [17:09<09:55,  3.25s/it] 64%|######3   | 318/500 [17:12<09:52,  3.25s/it] 64%|######3   | 319/500 [17:16<09:51,  3.27s/it] 64%|######4   | 320/500 [17:19<09:46,  3.26s/it] 64%|######4   | 321/500 [17:22<09:43,  3.26s/it] 64%|######4   | 322/500 [17:25<09:39,  3.26s/it] 65%|######4   | 323/500 [17:29<09:34,  3.25s/it] 65%|######4   | 324/500 [17:32<09:31,  3.25s/it] 65%|######5   | 325/500 [17:35<09:28,  3.25s/it] 65%|######5   | 326/500 [17:38<09:25,  3.25s/it] 65%|######5   | 327/500 [17:42<09:21,  3.24s/it] 66%|######5   | 328/500 [17:45<09:18,  3.25s/it] 66%|######5   | 329/500 [17:48<09:15,  3.25s/it] 66%|######6   | 330/500 [17:51<09:10,  3.24s/it] 66%|######6   | 331/500 [17:55<09:07,  3.24s/it] 66%|######6   | 332/500 [17:58<09:06,  3.25s/it] 67%|######6   | 333/500 [18:01<09:04,  3.26s/it] 67%|######6   | 334/500 [18:04<09:02,  3.27s/it] 67%|######7   | 335/500 [18:08<08:57,  3.26s/it] 67%|######7   | 336/500 [18:11<08:53,  3.25s/it] 67%|######7   | 337/500 [18:14<08:51,  3.26s/it] 68%|######7   | 338/500 [18:17<08:47,  3.26s/it] 68%|######7   | 339/500 [18:21<08:43,  3.25s/it] 68%|######8   | 340/500 [18:24<08:38,  3.24s/it] 68%|######8   | 341/500 [18:27<08:36,  3.25s/it] 68%|######8   | 342/500 [18:30<08:32,  3.24s/it] 69%|######8   | 343/500 [18:34<08:29,  3.25s/it] 69%|######8   | 344/500 [18:37<08:25,  3.24s/it] 69%|######9   | 345/500 [18:40<08:22,  3.24s/it] 69%|######9   | 346/500 [18:43<08:20,  3.25s/it] 69%|######9   | 347/500 [18:47<08:17,  3.25s/it] 70%|######9   | 348/500 [18:50<08:13,  3.25s/it] 70%|######9   | 349/500 [18:53<08:12,  3.26s/it] 70%|#######   | 350/500 [18:56<08:07,  3.25s/it] 70%|#######   | 351/500 [19:00<08:05,  3.26s/it] 70%|#######   | 352/500 [19:03<08:01,  3.25s/it] 71%|#######   | 353/500 [19:06<07:59,  3.26s/it] 71%|#######   | 354/500 [19:09<07:56,  3.26s/it] 71%|#######1  | 355/500 [19:13<07:52,  3.26s/it] 71%|#######1  | 356/500 [19:16<07:50,  3.27s/it] 71%|#######1  | 357/500 [19:19<07:45,  3.26s/it] 72%|#######1  | 358/500 [19:22<07:41,  3.25s/it] 72%|#######1  | 359/500 [19:26<07:37,  3.25s/it] 72%|#######2  | 360/500 [19:29<07:37,  3.27s/it] 72%|#######2  | 361/500 [19:32<07:34,  3.27s/it] 72%|#######2  | 362/500 [19:36<07:32,  3.28s/it] 73%|#######2  | 363/500 [19:39<07:27,  3.27s/it] 73%|#######2  | 364/500 [19:42<07:23,  3.26s/it] 73%|#######3  | 365/500 [19:45<07:18,  3.25s/it] 73%|#######3  | 366/500 [19:49<07:16,  3.26s/it] 73%|#######3  | 367/500 [19:52<07:12,  3.25s/it] 74%|#######3  | 368/500 [19:55<07:08,  3.25s/it] 74%|#######3  | 369/500 [19:58<07:05,  3.25s/it] 74%|#######4  | 370/500 [20:02<07:01,  3.24s/it] 74%|#######4  | 371/500 [20:05<06:58,  3.25s/it] 74%|#######4  | 372/500 [20:08<06:56,  3.26s/it] 75%|#######4  | 373/500 [20:11<06:52,  3.25s/it] 75%|#######4  | 374/500 [20:15<06:49,  3.25s/it] 75%|#######5  | 375/500 [20:18<06:46,  3.25s/it] 75%|#######5  | 376/500 [20:21<06:43,  3.26s/it] 75%|#######5  | 377/500 [20:24<06:41,  3.26s/it] 76%|#######5  | 378/500 [20:28<06:37,  3.26s/it] 76%|#######5  | 379/500 [20:31<06:34,  3.26s/it] 76%|#######6  | 380/500 [20:34<06:31,  3.26s/it] 76%|#######6  | 381/500 [20:37<06:27,  3.26s/it] 76%|#######6  | 382/500 [20:41<06:24,  3.26s/it] 77%|#######6  | 383/500 [20:44<06:21,  3.26s/it] 77%|#######6  | 384/500 [20:47<06:18,  3.27s/it] 77%|#######7  | 385/500 [20:50<06:15,  3.26s/it] 77%|#######7  | 386/500 [20:54<06:12,  3.26s/it] 77%|#######7  | 387/500 [20:57<06:08,  3.26s/it] 78%|#######7  | 388/500 [21:00<06:05,  3.27s/it] 78%|#######7  | 389/500 [21:04<06:02,  3.27s/it] 78%|#######8  | 390/500 [21:07<05:59,  3.27s/it] 78%|#######8  | 391/500 [21:10<05:56,  3.27s/it] 78%|#######8  | 392/500 [21:13<05:52,  3.26s/it] 79%|#######8  | 393/500 [21:17<05:48,  3.26s/it] 79%|#######8  | 394/500 [21:20<05:45,  3.26s/it] 79%|#######9  | 395/500 [21:23<05:44,  3.28s/it] 79%|#######9  | 396/500 [21:26<05:39,  3.27s/it] 79%|#######9  | 397/500 [21:30<05:36,  3.26s/it] 80%|#######9  | 398/500 [21:33<05:33,  3.27s/it] 80%|#######9  | 399/500 [21:36<05:28,  3.26s/it] 80%|########  | 400/500 [21:39<05:25,  3.25s/it] 80%|########  | 401/500 [21:43<05:22,  3.26s/it] 80%|########  | 402/500 [21:46<05:20,  3.27s/it] 81%|########  | 403/500 [21:49<05:16,  3.27s/it] 81%|########  | 404/500 [21:52<05:13,  3.27s/it] 81%|########1 | 405/500 [21:56<05:10,  3.27s/it] 81%|########1 | 406/500 [21:59<05:06,  3.26s/it] 81%|########1 | 407/500 [22:02<05:03,  3.26s/it] 82%|########1 | 408/500 [22:06<04:59,  3.26s/it] 82%|########1 | 409/500 [22:09<04:56,  3.26s/it] 82%|########2 | 410/500 [22:12<04:54,  3.27s/it] 82%|########2 | 411/500 [22:15<04:51,  3.27s/it] 82%|########2 | 412/500 [22:19<04:47,  3.26s/it] 83%|########2 | 413/500 [22:22<04:44,  3.27s/it] 83%|########2 | 414/500 [22:25<04:40,  3.26s/it] 83%|########2 | 415/500 [22:28<04:37,  3.27s/it] 83%|########3 | 416/500 [22:32<04:34,  3.27s/it] 83%|########3 | 417/500 [22:35<04:31,  3.27s/it] 84%|########3 | 418/500 [22:38<04:28,  3.27s/it] 84%|########3 | 419/500 [22:41<04:24,  3.27s/it] 84%|########4 | 420/500 [22:45<04:21,  3.27s/it] 84%|########4 | 421/500 [22:48<04:17,  3.26s/it] 84%|########4 | 422/500 [22:51<04:14,  3.26s/it] 85%|########4 | 423/500 [22:54<04:10,  3.25s/it] 85%|########4 | 424/500 [22:58<04:07,  3.25s/it] 85%|########5 | 425/500 [23:01<04:03,  3.24s/it] 85%|########5 | 426/500 [23:04<03:59,  3.24s/it] 85%|########5 | 427/500 [23:07<03:57,  3.25s/it] 86%|########5 | 428/500 [23:11<03:53,  3.25s/it] 86%|########5 | 429/500 [23:14<03:51,  3.26s/it] 86%|########6 | 430/500 [23:17<03:48,  3.26s/it] 86%|########6 | 431/500 [23:21<03:45,  3.26s/it] 86%|########6 | 432/500 [23:24<03:41,  3.26s/it] 87%|########6 | 433/500 [23:27<03:38,  3.26s/it] 87%|########6 | 434/500 [23:30<03:34,  3.26s/it] 87%|########7 | 435/500 [23:34<03:32,  3.26s/it] 87%|########7 | 436/500 [23:37<03:28,  3.26s/it] 87%|########7 | 437/500 [23:40<03:24,  3.25s/it] 88%|########7 | 438/500 [23:43<03:21,  3.25s/it] 88%|########7 | 439/500 [23:47<03:18,  3.26s/it] 88%|########8 | 440/500 [23:50<03:16,  3.27s/it] 88%|########8 | 441/500 [23:53<03:13,  3.28s/it] 88%|########8 | 442/500 [23:56<03:09,  3.27s/it] 89%|########8 | 443/500 [24:00<03:06,  3.27s/it] 89%|########8 | 444/500 [24:03<03:02,  3.25s/it] 89%|########9 | 445/500 [24:06<02:59,  3.27s/it] 89%|########9 | 446/500 [24:09<02:56,  3.27s/it] 89%|########9 | 447/500 [24:13<02:53,  3.26s/it] 90%|########9 | 448/500 [24:16<02:49,  3.26s/it] 90%|########9 | 449/500 [24:19<02:45,  3.25s/it] 90%|######### | 450/500 [24:22<02:42,  3.24s/it] 90%|######### | 451/500 [24:26<02:38,  3.24s/it] 90%|######### | 452/500 [24:29<02:35,  3.24s/it] 91%|######### | 453/500 [24:32<02:31,  3.23s/it] 91%|######### | 454/500 [24:35<02:28,  3.23s/it] 91%|#########1| 455/500 [24:39<02:26,  3.25s/it] 91%|#########1| 456/500 [24:42<02:23,  3.25s/it] 91%|#########1| 457/500 [24:45<02:20,  3.26s/it] 92%|#########1| 458/500 [24:48<02:17,  3.27s/it] 92%|#########1| 459/500 [24:52<02:14,  3.27s/it] 92%|#########2| 460/500 [24:55<02:10,  3.27s/it] 92%|#########2| 461/500 [24:58<02:07,  3.27s/it] 92%|#########2| 462/500 [25:02<02:03,  3.26s/it] 93%|#########2| 463/500 [25:05<02:00,  3.25s/it] 93%|#########2| 464/500 [25:08<01:57,  3.25s/it] 93%|#########3| 465/500 [25:11<01:54,  3.26s/it] 93%|#########3| 466/500 [25:15<01:50,  3.26s/it] 93%|#########3| 467/500 [25:18<01:47,  3.26s/it] 94%|#########3| 468/500 [25:21<01:44,  3.25s/it] 94%|#########3| 469/500 [25:24<01:40,  3.25s/it] 94%|#########3| 470/500 [25:28<01:37,  3.26s/it] 94%|#########4| 471/500 [25:31<01:34,  3.26s/it] 94%|#########4| 472/500 [25:34<01:31,  3.27s/it] 95%|#########4| 473/500 [25:37<01:28,  3.27s/it] 95%|#########4| 474/500 [25:41<01:24,  3.27s/it] 95%|#########5| 475/500 [25:44<01:21,  3.27s/it] 95%|#########5| 476/500 [25:47<01:18,  3.28s/it] 95%|#########5| 477/500 [25:50<01:15,  3.28s/it] 96%|#########5| 478/500 [25:54<01:12,  3.29s/it] 96%|#########5| 479/500 [25:57<01:09,  3.29s/it] 96%|#########6| 480/500 [26:00<01:05,  3.29s/it] 96%|#########6| 481/500 [26:04<01:02,  3.28s/it] 96%|#########6| 482/500 [26:07<00:59,  3.28s/it] 97%|#########6| 483/500 [26:10<00:55,  3.27s/it] 97%|#########6| 484/500 [26:13<00:52,  3.26s/it] 97%|#########7| 485/500 [26:17<00:48,  3.26s/it] 97%|#########7| 486/500 [26:20<00:45,  3.26s/it] 97%|#########7| 487/500 [26:23<00:42,  3.26s/it] 98%|#########7| 488/500 [26:26<00:39,  3.26s/it] 98%|#########7| 489/500 [26:30<00:35,  3.25s/it] 98%|#########8| 490/500 [26:33<00:32,  3.25s/it] 98%|#########8| 491/500 [26:36<00:29,  3.25s/it] 98%|#########8| 492/500 [26:39<00:25,  3.25s/it] 99%|#########8| 493/500 [26:43<00:22,  3.25s/it] 99%|#########8| 494/500 [26:46<00:19,  3.25s/it] 99%|#########9| 495/500 [26:49<00:16,  3.26s/it] 99%|#########9| 496/500 [26:52<00:13,  3.26s/it] 99%|#########9| 497/500 [26:56<00:09,  3.25s/it]100%|#########9| 498/500 [26:59<00:06,  3.25s/it]100%|#########9| 499/500 [27:02<00:03,  3.25s/it]100%|##########| 500/500 [27:05<00:00,  3.25s/it]                                                   0%|          | 0/893 [00:00<?, ?it/s]  0%|          | 1/893 [00:01<20:14,  1.36s/it]  0%|          | 2/893 [00:02<20:10,  1.36s/it]  0%|          | 3/893 [00:04<19:58,  1.35s/it]  0%|          | 4/893 [00:05<19:52,  1.34s/it]  1%|          | 5/893 [00:06<20:01,  1.35s/it]  1%|          | 6/893 [00:08<20:04,  1.36s/it]  1%|          | 7/893 [00:09<20:01,  1.36s/it]  1%|          | 8/893 [00:10<19:55,  1.35s/it]  1%|1         | 9/893 [00:12<19:53,  1.35s/it]  1%|1         | 10/893 [00:13<19:41,  1.34s/it]  1%|1         | 11/893 [00:14<19:29,  1.33s/it]  1%|1         | 12/893 [00:16<19:30,  1.33s/it]  1%|1         | 13/893 [00:17<19:32,  1.33s/it]  2%|1         | 14/893 [00:18<19:33,  1.34s/it]  2%|1         | 15/893 [00:20<19:28,  1.33s/it]  2%|1         | 16/893 [00:21<19:22,  1.33s/it]  2%|1         | 17/893 [00:22<19:22,  1.33s/it]  2%|2         | 18/893 [00:24<19:22,  1.33s/it]  2%|2         | 19/893 [00:25<19:24,  1.33s/it]  2%|2         | 20/893 [00:26<19:20,  1.33s/it]  2%|2         | 21/893 [00:28<19:13,  1.32s/it]  2%|2         | 22/893 [00:29<19:16,  1.33s/it]  3%|2         | 23/893 [00:30<19:21,  1.34s/it]  3%|2         | 24/893 [00:32<19:20,  1.34s/it]  3%|2         | 25/893 [00:33<19:30,  1.35s/it]  3%|2         | 26/893 [00:34<19:22,  1.34s/it]  3%|3         | 27/893 [00:36<19:18,  1.34s/it]  3%|3         | 28/893 [00:37<19:17,  1.34s/it]  3%|3         | 29/893 [00:38<19:13,  1.33s/it]  3%|3         | 30/893 [00:40<19:28,  1.35s/it]  3%|3         | 31/893 [00:41<19:19,  1.35s/it]  4%|3         | 32/893 [00:42<19:16,  1.34s/it]  4%|3         | 33/893 [00:44<19:15,  1.34s/it]  4%|3         | 34/893 [00:45<19:11,  1.34s/it]  4%|3         | 35/893 [00:46<19:11,  1.34s/it]  4%|4         | 36/893 [00:48<19:08,  1.34s/it]  4%|4         | 37/893 [00:49<19:00,  1.33s/it]  4%|4         | 38/893 [00:50<18:55,  1.33s/it]  4%|4         | 39/893 [00:52<18:51,  1.33s/it]  4%|4         | 40/893 [00:53<18:52,  1.33s/it]  5%|4         | 41/893 [00:54<18:52,  1.33s/it]  5%|4         | 42/893 [00:56<18:43,  1.32s/it]  5%|4         | 43/893 [00:57<18:43,  1.32s/it]  5%|4         | 44/893 [00:58<18:40,  1.32s/it]  5%|5         | 45/893 [01:00<18:42,  1.32s/it]  5%|5         | 46/893 [01:01<18:47,  1.33s/it]  5%|5         | 47/893 [01:02<18:52,  1.34s/it]  5%|5         | 48/893 [01:04<19:00,  1.35s/it]  5%|5         | 49/893 [01:05<18:53,  1.34s/it]  6%|5         | 50/893 [01:06<18:47,  1.34s/it]  6%|5         | 51/893 [01:08<18:45,  1.34s/it]  6%|5         | 52/893 [01:09<18:41,  1.33s/it]  6%|5         | 53/893 [01:10<18:44,  1.34s/it]  6%|6         | 54/893 [01:12<18:45,  1.34s/it]  6%|6         | 55/893 [01:13<18:33,  1.33s/it]  6%|6         | 56/893 [01:14<18:27,  1.32s/it]  6%|6         | 57/893 [01:16<18:24,  1.32s/it]  6%|6         | 58/893 [01:17<18:22,  1.32s/it]  7%|6         | 59/893 [01:18<18:22,  1.32s/it]  7%|6         | 60/893 [01:20<18:29,  1.33s/it]  7%|6         | 61/893 [01:21<18:25,  1.33s/it]  7%|6         | 62/893 [01:22<18:21,  1.33s/it]  7%|7         | 63/893 [01:24<18:22,  1.33s/it]  7%|7         | 64/893 [01:25<18:24,  1.33s/it]  7%|7         | 65/893 [01:26<18:19,  1.33s/it]  7%|7         | 66/893 [01:28<18:27,  1.34s/it]  8%|7         | 67/893 [01:29<18:15,  1.33s/it]  8%|7         | 68/893 [01:30<18:17,  1.33s/it]  8%|7         | 69/893 [01:32<18:22,  1.34s/it]  8%|7         | 70/893 [01:33<18:34,  1.35s/it]  8%|7         | 71/893 [01:34<18:25,  1.35s/it]  8%|8         | 72/893 [01:36<18:26,  1.35s/it]  8%|8         | 73/893 [01:37<18:23,  1.35s/it]  8%|8         | 74/893 [01:38<18:19,  1.34s/it]  8%|8         | 75/893 [01:40<18:11,  1.33s/it]  9%|8         | 76/893 [01:41<18:09,  1.33s/it]  9%|8         | 77/893 [01:42<18:08,  1.33s/it]  9%|8         | 78/893 [01:44<18:08,  1.34s/it]  9%|8         | 79/893 [01:45<18:06,  1.33s/it]  9%|8         | 80/893 [01:46<17:57,  1.33s/it]  9%|9         | 81/893 [01:48<17:54,  1.32s/it]  9%|9         | 82/893 [01:49<17:53,  1.32s/it]  9%|9         | 83/893 [01:50<17:54,  1.33s/it]  9%|9         | 84/893 [01:52<17:54,  1.33s/it] 10%|9         | 85/893 [01:53<17:55,  1.33s/it] 10%|9         | 86/893 [01:54<17:59,  1.34s/it] 10%|9         | 87/893 [01:56<17:54,  1.33s/it] 10%|9         | 88/893 [01:57<18:00,  1.34s/it] 10%|9         | 89/893 [01:58<17:55,  1.34s/it] 10%|#         | 90/893 [02:00<17:46,  1.33s/it] 10%|#         | 91/893 [02:01<17:45,  1.33s/it] 10%|#         | 92/893 [02:02<17:43,  1.33s/it] 10%|#         | 93/893 [02:04<17:42,  1.33s/it] 11%|#         | 94/893 [02:05<17:40,  1.33s/it] 11%|#         | 95/893 [02:06<17:39,  1.33s/it] 11%|#         | 96/893 [02:08<17:43,  1.33s/it] 11%|#         | 97/893 [02:09<17:42,  1.34s/it] 11%|#         | 98/893 [02:10<17:36,  1.33s/it] 11%|#1        | 99/893 [02:12<17:31,  1.32s/it] 11%|#1        | 100/893 [02:13<17:29,  1.32s/it] 11%|#1        | 101/893 [02:14<17:27,  1.32s/it] 11%|#1        | 102/893 [02:16<17:29,  1.33s/it] 12%|#1        | 103/893 [02:17<17:26,  1.33s/it] 12%|#1        | 104/893 [02:18<17:26,  1.33s/it] 12%|#1        | 105/893 [02:20<17:25,  1.33s/it] 12%|#1        | 106/893 [02:21<17:22,  1.32s/it] 12%|#1        | 107/893 [02:22<17:18,  1.32s/it] 12%|#2        | 108/893 [02:23<17:18,  1.32s/it] 12%|#2        | 109/893 [02:25<17:17,  1.32s/it] 12%|#2        | 110/893 [02:26<17:17,  1.32s/it] 12%|#2        | 111/893 [02:27<17:11,  1.32s/it] 13%|#2        | 112/893 [02:29<17:14,  1.32s/it] 13%|#2        | 113/893 [02:30<17:15,  1.33s/it] 13%|#2        | 114/893 [02:31<17:17,  1.33s/it] 13%|#2        | 115/893 [02:33<17:16,  1.33s/it] 13%|#2        | 116/893 [02:34<17:10,  1.33s/it] 13%|#3        | 117/893 [02:35<17:09,  1.33s/it] 13%|#3        | 118/893 [02:37<17:17,  1.34s/it] 13%|#3        | 119/893 [02:38<17:13,  1.34s/it] 13%|#3        | 120/893 [02:39<17:14,  1.34s/it] 14%|#3        | 121/893 [02:41<17:09,  1.33s/it] 14%|#3        | 122/893 [02:42<17:08,  1.33s/it] 14%|#3        | 123/893 [02:43<17:04,  1.33s/it] 14%|#3        | 124/893 [02:45<17:08,  1.34s/it] 14%|#3        | 125/893 [02:46<17:02,  1.33s/it] 14%|#4        | 126/893 [02:47<16:54,  1.32s/it] 14%|#4        | 127/893 [02:49<16:53,  1.32s/it] 14%|#4        | 128/893 [02:50<16:52,  1.32s/it] 14%|#4        | 129/893 [02:51<16:49,  1.32s/it] 15%|#4        | 130/893 [02:53<16:49,  1.32s/it] 15%|#4        | 131/893 [02:54<16:48,  1.32s/it] 15%|#4        | 132/893 [02:55<16:47,  1.32s/it] 15%|#4        | 133/893 [02:57<16:46,  1.32s/it] 15%|#5        | 134/893 [02:58<16:46,  1.33s/it] 15%|#5        | 135/893 [02:59<16:46,  1.33s/it] 15%|#5        | 136/893 [03:01<16:45,  1.33s/it] 15%|#5        | 137/893 [03:02<16:43,  1.33s/it] 15%|#5        | 138/893 [03:03<16:39,  1.32s/it] 16%|#5        | 139/893 [03:05<16:37,  1.32s/it] 16%|#5        | 140/893 [03:06<16:39,  1.33s/it] 16%|#5        | 141/893 [03:07<16:39,  1.33s/it] 16%|#5        | 142/893 [03:09<16:43,  1.34s/it] 16%|#6        | 143/893 [03:10<16:35,  1.33s/it] 16%|#6        | 144/893 [03:11<16:33,  1.33s/it] 16%|#6        | 145/893 [03:13<16:29,  1.32s/it] 16%|#6        | 146/893 [03:14<16:31,  1.33s/it] 16%|#6        | 147/893 [03:15<16:29,  1.33s/it] 17%|#6        | 148/893 [03:17<16:24,  1.32s/it] 17%|#6        | 149/893 [03:18<16:23,  1.32s/it] 17%|#6        | 150/893 [03:19<16:23,  1.32s/it] 17%|#6        | 151/893 [03:21<16:21,  1.32s/it] 17%|#7        | 152/893 [03:22<16:20,  1.32s/it] 17%|#7        | 153/893 [03:23<16:20,  1.33s/it] 17%|#7        | 154/893 [03:25<16:20,  1.33s/it] 17%|#7        | 155/893 [03:26<16:18,  1.33s/it] 17%|#7        | 156/893 [03:27<16:15,  1.32s/it] 18%|#7        | 157/893 [03:28<16:12,  1.32s/it] 18%|#7        | 158/893 [03:30<16:09,  1.32s/it] 18%|#7        | 159/893 [03:31<16:09,  1.32s/it] 18%|#7        | 160/893 [03:32<16:08,  1.32s/it] 18%|#8        | 161/893 [03:34<16:09,  1.32s/it] 18%|#8        | 162/893 [03:35<16:10,  1.33s/it] 18%|#8        | 163/893 [03:36<16:04,  1.32s/it] 18%|#8        | 164/893 [03:38<16:00,  1.32s/it] 18%|#8        | 165/893 [03:39<16:00,  1.32s/it] 19%|#8        | 166/893 [03:40<16:02,  1.32s/it] 19%|#8        | 167/893 [03:42<16:03,  1.33s/it] 19%|#8        | 168/893 [03:43<16:00,  1.33s/it] 19%|#8        | 169/893 [03:44<15:55,  1.32s/it] 19%|#9        | 170/893 [03:46<15:57,  1.32s/it] 19%|#9        | 171/893 [03:47<15:55,  1.32s/it] 19%|#9        | 172/893 [03:48<15:50,  1.32s/it] 19%|#9        | 173/893 [03:50<15:49,  1.32s/it] 19%|#9        | 174/893 [03:51<15:49,  1.32s/it] 20%|#9        | 175/893 [03:52<15:51,  1.33s/it] 20%|#9        | 176/893 [03:54<15:47,  1.32s/it] 20%|#9        | 177/893 [03:55<15:47,  1.32s/it] 20%|#9        | 178/893 [03:56<15:46,  1.32s/it] 20%|##        | 179/893 [03:58<15:48,  1.33s/it] 20%|##        | 180/893 [03:59<15:42,  1.32s/it] 20%|##        | 181/893 [04:00<15:40,  1.32s/it] 20%|##        | 182/893 [04:02<15:43,  1.33s/it] 20%|##        | 183/893 [04:03<15:42,  1.33s/it] 21%|##        | 184/893 [04:04<15:42,  1.33s/it] 21%|##        | 185/893 [04:06<15:39,  1.33s/it] 21%|##        | 186/893 [04:07<15:39,  1.33s/it] 21%|##        | 187/893 [04:08<15:40,  1.33s/it] 21%|##1       | 188/893 [04:10<15:41,  1.33s/it] 21%|##1       | 189/893 [04:11<15:37,  1.33s/it] 21%|##1       | 190/893 [04:12<15:33,  1.33s/it] 21%|##1       | 191/893 [04:14<15:35,  1.33s/it] 22%|##1       | 192/893 [04:15<15:34,  1.33s/it] 22%|##1       | 193/893 [04:16<15:29,  1.33s/it] 22%|##1       | 194/893 [04:18<15:27,  1.33s/it] 22%|##1       | 195/893 [04:19<15:23,  1.32s/it] 22%|##1       | 196/893 [04:20<15:30,  1.33s/it] 22%|##2       | 197/893 [04:22<15:35,  1.34s/it] 22%|##2       | 198/893 [04:23<15:33,  1.34s/it] 22%|##2       | 199/893 [04:24<15:25,  1.33s/it] 22%|##2       | 200/893 [04:26<15:17,  1.32s/it] 23%|##2       | 201/893 [04:27<15:16,  1.32s/it] 23%|##2       | 202/893 [04:28<15:16,  1.33s/it] 23%|##2       | 203/893 [04:30<15:15,  1.33s/it] 23%|##2       | 204/893 [04:31<15:15,  1.33s/it] 23%|##2       | 205/893 [04:32<15:20,  1.34s/it] 23%|##3       | 206/893 [04:34<15:20,  1.34s/it] 23%|##3       | 207/893 [04:35<15:13,  1.33s/it] 23%|##3       | 208/893 [04:36<15:10,  1.33s/it] 23%|##3       | 209/893 [04:38<15:09,  1.33s/it] 24%|##3       | 210/893 [04:39<15:07,  1.33s/it] 24%|##3       | 211/893 [04:40<15:05,  1.33s/it] 24%|##3       | 212/893 [04:42<15:10,  1.34s/it] 24%|##3       | 213/893 [04:43<15:10,  1.34s/it] 24%|##3       | 214/893 [04:44<15:01,  1.33s/it] 24%|##4       | 215/893 [04:45<14:59,  1.33s/it] 24%|##4       | 216/893 [04:47<15:03,  1.33s/it] 24%|##4       | 217/893 [04:48<15:05,  1.34s/it] 24%|##4       | 218/893 [04:50<15:03,  1.34s/it] 25%|##4       | 219/893 [04:51<14:58,  1.33s/it] 25%|##4       | 220/893 [04:52<15:01,  1.34s/it] 25%|##4       | 221/893 [04:54<14:56,  1.33s/it] 25%|##4       | 222/893 [04:55<14:50,  1.33s/it] 25%|##4       | 223/893 [04:56<14:49,  1.33s/it] 25%|##5       | 224/893 [04:57<14:46,  1.33s/it] 25%|##5       | 225/893 [04:59<14:44,  1.32s/it] 25%|##5       | 226/893 [05:00<14:43,  1.32s/it] 25%|##5       | 227/893 [05:01<14:44,  1.33s/it] 26%|##5       | 228/893 [05:03<14:49,  1.34s/it] 26%|##5       | 229/893 [05:04<14:41,  1.33s/it] 26%|##5       | 230/893 [05:05<14:41,  1.33s/it] 26%|##5       | 231/893 [05:07<14:39,  1.33s/it] 26%|##5       | 232/893 [05:08<14:36,  1.33s/it] 26%|##6       | 233/893 [05:09<14:35,  1.33s/it] 26%|##6       | 234/893 [05:11<14:26,  1.32s/it] 26%|##6       | 235/893 [05:12<14:27,  1.32s/it] 26%|##6       | 236/893 [05:13<14:28,  1.32s/it] 27%|##6       | 237/893 [05:15<14:25,  1.32s/it] 27%|##6       | 238/893 [05:16<14:22,  1.32s/it] 27%|##6       | 239/893 [05:17<14:25,  1.32s/it] 27%|##6       | 240/893 [05:19<14:29,  1.33s/it] 27%|##6       | 241/893 [05:20<14:25,  1.33s/it] 27%|##7       | 242/893 [05:21<14:23,  1.33s/it] 27%|##7       | 243/893 [05:23<14:17,  1.32s/it] 27%|##7       | 244/893 [05:24<14:19,  1.32s/it] 27%|##7       | 245/893 [05:25<14:16,  1.32s/it] 28%|##7       | 246/893 [05:27<14:18,  1.33s/it] 28%|##7       | 247/893 [05:28<14:20,  1.33s/it] 28%|##7       | 248/893 [05:29<14:19,  1.33s/it] 28%|##7       | 249/893 [05:31<14:25,  1.34s/it] 28%|##7       | 250/893 [05:32<14:25,  1.35s/it] 28%|##8       | 251/893 [05:33<14:22,  1.34s/it] 28%|##8       | 252/893 [05:35<14:15,  1.33s/it] 28%|##8       | 253/893 [05:36<14:08,  1.33s/it] 28%|##8       | 254/893 [05:37<14:09,  1.33s/it] 29%|##8       | 255/893 [05:39<14:06,  1.33s/it] 29%|##8       | 256/893 [05:40<14:01,  1.32s/it] 29%|##8       | 257/893 [05:41<14:00,  1.32s/it] 29%|##8       | 258/893 [05:43<13:56,  1.32s/it] 29%|##9       | 259/893 [05:44<14:00,  1.33s/it] 29%|##9       | 260/893 [05:45<13:55,  1.32s/it] 29%|##9       | 261/893 [05:47<13:49,  1.31s/it] 29%|##9       | 262/893 [05:48<13:49,  1.31s/it] 29%|##9       | 263/893 [05:49<13:47,  1.31s/it] 30%|##9       | 264/893 [05:50<13:49,  1.32s/it] 30%|##9       | 265/893 [05:52<13:55,  1.33s/it] 30%|##9       | 266/893 [05:53<13:57,  1.34s/it] 30%|##9       | 267/893 [05:55<13:55,  1.34s/it] 30%|###       | 268/893 [05:56<14:00,  1.35s/it] 30%|###       | 269/893 [05:57<13:57,  1.34s/it] 30%|###       | 270/893 [05:59<13:51,  1.33s/it] 30%|###       | 271/893 [06:00<13:55,  1.34s/it] 30%|###       | 272/893 [06:01<13:57,  1.35s/it] 31%|###       | 273/893 [06:03<13:52,  1.34s/it] 31%|###       | 274/893 [06:04<13:46,  1.34s/it] 31%|###       | 275/893 [06:05<13:46,  1.34s/it] 31%|###       | 276/893 [06:07<13:40,  1.33s/it] 31%|###1      | 277/893 [06:08<13:38,  1.33s/it] 31%|###1      | 278/893 [06:09<13:39,  1.33s/it] 31%|###1      | 279/893 [06:11<13:44,  1.34s/it] 31%|###1      | 280/893 [06:12<13:41,  1.34s/it] 31%|###1      | 281/893 [06:13<13:36,  1.33s/it] 32%|###1      | 282/893 [06:15<13:30,  1.33s/it] 32%|###1      | 283/893 [06:16<13:31,  1.33s/it] 32%|###1      | 284/893 [06:17<13:34,  1.34s/it] 32%|###1      | 285/893 [06:19<13:32,  1.34s/it] 32%|###2      | 286/893 [06:20<13:25,  1.33s/it] 32%|###2      | 287/893 [06:21<13:26,  1.33s/it] 32%|###2      | 288/893 [06:23<13:22,  1.33s/it] 32%|###2      | 289/893 [06:24<13:21,  1.33s/it] 32%|###2      | 290/893 [06:25<13:22,  1.33s/it] 33%|###2      | 291/893 [06:27<13:16,  1.32s/it] 33%|###2      | 292/893 [06:28<13:19,  1.33s/it] 33%|###2      | 293/893 [06:29<13:20,  1.33s/it] 33%|###2      | 294/893 [06:31<13:18,  1.33s/it] 33%|###3      | 295/893 [06:32<13:14,  1.33s/it] 33%|###3      | 296/893 [06:33<13:09,  1.32s/it] 33%|###3      | 297/893 [06:35<13:07,  1.32s/it] 33%|###3      | 298/893 [06:36<13:09,  1.33s/it] 33%|###3      | 299/893 [06:37<13:06,  1.32s/it] 34%|###3      | 300/893 [06:38<13:05,  1.32s/it] 34%|###3      | 301/893 [06:40<13:02,  1.32s/it] 34%|###3      | 302/893 [06:41<13:01,  1.32s/it] 34%|###3      | 303/893 [06:42<13:04,  1.33s/it] 34%|###4      | 304/893 [06:44<13:05,  1.33s/it] 34%|###4      | 305/893 [06:45<12:58,  1.32s/it] 34%|###4      | 306/893 [06:46<12:55,  1.32s/it] 34%|###4      | 307/893 [06:48<12:55,  1.32s/it] 34%|###4      | 308/893 [06:49<12:53,  1.32s/it] 35%|###4      | 309/893 [06:50<12:49,  1.32s/it] 35%|###4      | 310/893 [06:52<12:51,  1.32s/it] 35%|###4      | 311/893 [06:53<12:51,  1.33s/it] 35%|###4      | 312/893 [06:54<12:48,  1.32s/it] 35%|###5      | 313/893 [06:56<12:42,  1.31s/it] 35%|###5      | 314/893 [06:57<12:41,  1.32s/it] 35%|###5      | 315/893 [06:58<12:39,  1.31s/it] 35%|###5      | 316/893 [07:00<12:41,  1.32s/it] 35%|###5      | 317/893 [07:01<12:42,  1.32s/it] 36%|###5      | 318/893 [07:02<12:41,  1.32s/it] 36%|###5      | 319/893 [07:04<12:39,  1.32s/it] 36%|###5      | 320/893 [07:05<12:38,  1.32s/it] 36%|###5      | 321/893 [07:06<12:37,  1.33s/it] 36%|###6      | 322/893 [07:08<12:40,  1.33s/it] 36%|###6      | 323/893 [07:09<12:46,  1.34s/it] 36%|###6      | 324/893 [07:10<12:37,  1.33s/it] 36%|###6      | 325/893 [07:12<12:28,  1.32s/it] 37%|###6      | 326/893 [07:13<12:32,  1.33s/it] 37%|###6      | 327/893 [07:14<12:37,  1.34s/it] 37%|###6      | 328/893 [07:16<12:34,  1.34s/it] 37%|###6      | 329/893 [07:17<12:32,  1.33s/it] 37%|###6      | 330/893 [07:18<12:30,  1.33s/it] 37%|###7      | 331/893 [07:20<12:27,  1.33s/it] 37%|###7      | 332/893 [07:21<12:24,  1.33s/it] 37%|###7      | 333/893 [07:22<12:20,  1.32s/it] 37%|###7      | 334/893 [07:24<12:21,  1.33s/it] 38%|###7      | 335/893 [07:25<12:18,  1.32s/it] 38%|###7      | 336/893 [07:26<12:14,  1.32s/it] 38%|###7      | 337/893 [07:28<12:12,  1.32s/it] 38%|###7      | 338/893 [07:29<12:10,  1.32s/it] 38%|###7      | 339/893 [07:30<12:11,  1.32s/it] 38%|###8      | 340/893 [07:31<12:10,  1.32s/it] 38%|###8      | 341/893 [07:33<12:05,  1.31s/it] 38%|###8      | 342/893 [07:34<12:07,  1.32s/it] 38%|###8      | 343/893 [07:35<12:07,  1.32s/it] 39%|###8      | 344/893 [07:37<12:13,  1.34s/it] 39%|###8      | 345/893 [07:38<12:07,  1.33s/it] 39%|###8      | 346/893 [07:39<12:04,  1.33s/it] 39%|###8      | 347/893 [07:41<12:01,  1.32s/it] 39%|###8      | 348/893 [07:42<11:59,  1.32s/it] 39%|###9      | 349/893 [07:43<12:00,  1.32s/it] 39%|###9      | 350/893 [07:45<11:57,  1.32s/it] 39%|###9      | 351/893 [07:46<11:58,  1.33s/it] 39%|###9      | 352/893 [07:47<11:56,  1.32s/it] 40%|###9      | 353/893 [07:49<11:54,  1.32s/it] 40%|###9      | 354/893 [07:50<11:50,  1.32s/it] 40%|###9      | 355/893 [07:51<11:50,  1.32s/it] 40%|###9      | 356/893 [07:53<11:56,  1.33s/it] 40%|###9      | 357/893 [07:54<11:56,  1.34s/it] 40%|####      | 358/893 [07:55<11:55,  1.34s/it] 40%|####      | 359/893 [07:57<11:47,  1.32s/it] 40%|####      | 360/893 [07:58<11:41,  1.32s/it] 40%|####      | 361/893 [07:59<11:41,  1.32s/it] 41%|####      | 362/893 [08:01<11:43,  1.33s/it] 41%|####      | 363/893 [08:02<11:43,  1.33s/it] 41%|####      | 364/893 [08:03<11:40,  1.32s/it] 41%|####      | 365/893 [08:05<11:42,  1.33s/it] 41%|####      | 366/893 [08:06<11:40,  1.33s/it] 41%|####1     | 367/893 [08:07<11:38,  1.33s/it] 41%|####1     | 368/893 [08:09<11:35,  1.32s/it] 41%|####1     | 369/893 [08:10<11:35,  1.33s/it] 41%|####1     | 370/893 [08:11<11:37,  1.33s/it] 42%|####1     | 371/893 [08:13<11:33,  1.33s/it] 42%|####1     | 372/893 [08:14<11:28,  1.32s/it] 42%|####1     | 373/893 [08:15<11:26,  1.32s/it] 42%|####1     | 374/893 [08:17<11:27,  1.32s/it] 42%|####1     | 375/893 [08:18<11:26,  1.33s/it] 42%|####2     | 376/893 [08:19<11:21,  1.32s/it] 42%|####2     | 377/893 [08:20<11:17,  1.31s/it] 42%|####2     | 378/893 [08:22<11:18,  1.32s/it] 42%|####2     | 379/893 [08:23<11:14,  1.31s/it] 43%|####2     | 380/893 [08:24<11:15,  1.32s/it] 43%|####2     | 381/893 [08:26<11:15,  1.32s/it] 43%|####2     | 382/893 [08:27<11:12,  1.32s/it] 43%|####2     | 383/893 [08:28<11:11,  1.32s/it] 43%|####3     | 384/893 [08:30<11:13,  1.32s/it] 43%|####3     | 385/893 [08:31<11:24,  1.35s/it] 43%|####3     | 386/893 [08:32<11:16,  1.34s/it] 43%|####3     | 387/893 [08:34<11:15,  1.33s/it] 43%|####3     | 388/893 [08:35<11:17,  1.34s/it] 44%|####3     | 389/893 [08:36<11:13,  1.34s/it] 44%|####3     | 390/893 [08:38<11:12,  1.34s/it] 44%|####3     | 391/893 [08:39<11:14,  1.34s/it] 44%|####3     | 392/893 [08:41<11:16,  1.35s/it] 44%|####4     | 393/893 [08:42<11:14,  1.35s/it] 44%|####4     | 394/893 [08:43<11:09,  1.34s/it] 44%|####4     | 395/893 [08:45<11:11,  1.35s/it] 44%|####4     | 396/893 [08:46<11:04,  1.34s/it] 44%|####4     | 397/893 [08:47<11:01,  1.33s/it] 45%|####4     | 398/893 [08:48<10:57,  1.33s/it] 45%|####4     | 399/893 [08:50<11:01,  1.34s/it] 45%|####4     | 400/893 [08:51<10:58,  1.34s/it] 45%|####4     | 401/893 [08:53<10:55,  1.33s/it] 45%|####5     | 402/893 [08:54<10:52,  1.33s/it] 45%|####5     | 403/893 [08:55<10:48,  1.32s/it] 45%|####5     | 404/893 [08:56<10:46,  1.32s/it] 45%|####5     | 405/893 [08:58<10:43,  1.32s/it] 45%|####5     | 406/893 [08:59<10:43,  1.32s/it] 46%|####5     | 407/893 [09:00<10:42,  1.32s/it] 46%|####5     | 408/893 [09:02<10:43,  1.33s/it] 46%|####5     | 409/893 [09:03<10:42,  1.33s/it] 46%|####5     | 410/893 [09:04<10:43,  1.33s/it] 46%|####6     | 411/893 [09:06<10:41,  1.33s/it] 46%|####6     | 412/893 [09:07<10:39,  1.33s/it] 46%|####6     | 413/893 [09:08<10:36,  1.33s/it] 46%|####6     | 414/893 [09:10<10:34,  1.33s/it] 46%|####6     | 415/893 [09:11<10:32,  1.32s/it] 47%|####6     | 416/893 [09:12<10:34,  1.33s/it] 47%|####6     | 417/893 [09:14<10:34,  1.33s/it] 47%|####6     | 418/893 [09:15<10:30,  1.33s/it] 47%|####6     | 419/893 [09:16<10:30,  1.33s/it] 47%|####7     | 420/893 [09:18<10:27,  1.33s/it] 47%|####7     | 421/893 [09:19<10:33,  1.34s/it] 47%|####7     | 422/893 [09:20<10:35,  1.35s/it] 47%|####7     | 423/893 [09:22<10:32,  1.35s/it] 47%|####7     | 424/893 [09:23<10:29,  1.34s/it] 48%|####7     | 425/893 [09:24<10:25,  1.34s/it] 48%|####7     | 426/893 [09:26<10:21,  1.33s/it] 48%|####7     | 427/893 [09:27<10:20,  1.33s/it] 48%|####7     | 428/893 [09:28<10:17,  1.33s/it] 48%|####8     | 429/893 [09:30<10:18,  1.33s/it] 48%|####8     | 430/893 [09:31<10:17,  1.33s/it] 48%|####8     | 431/893 [09:32<10:13,  1.33s/it] 48%|####8     | 432/893 [09:34<10:12,  1.33s/it] 48%|####8     | 433/893 [09:35<10:13,  1.33s/it] 49%|####8     | 434/893 [09:36<10:15,  1.34s/it] 49%|####8     | 435/893 [09:38<10:14,  1.34s/it] 49%|####8     | 436/893 [09:39<10:11,  1.34s/it] 49%|####8     | 437/893 [09:40<10:07,  1.33s/it] 49%|####9     | 438/893 [09:42<10:03,  1.33s/it] 49%|####9     | 439/893 [09:43<10:06,  1.33s/it] 49%|####9     | 440/893 [09:44<10:08,  1.34s/it] 49%|####9     | 441/893 [09:46<10:07,  1.34s/it] 49%|####9     | 442/893 [09:47<10:03,  1.34s/it] 50%|####9     | 443/893 [09:48<10:01,  1.34s/it] 50%|####9     | 444/893 [09:50<09:58,  1.33s/it] 50%|####9     | 445/893 [09:51<10:00,  1.34s/it] 50%|####9     | 446/893 [09:52<09:59,  1.34s/it] 50%|#####     | 447/893 [09:54<09:55,  1.34s/it] 50%|#####     | 448/893 [09:55<09:56,  1.34s/it] 50%|#####     | 449/893 [09:56<09:53,  1.34s/it] 50%|#####     | 450/893 [09:58<09:49,  1.33s/it] 51%|#####     | 451/893 [09:59<09:53,  1.34s/it] 51%|#####     | 452/893 [10:01<09:52,  1.34s/it] 51%|#####     | 453/893 [10:02<09:55,  1.35s/it] 51%|#####     | 454/893 [10:03<09:49,  1.34s/it] 51%|#####     | 455/893 [10:05<09:44,  1.33s/it] 51%|#####1    | 456/893 [10:06<09:40,  1.33s/it] 51%|#####1    | 457/893 [10:07<09:36,  1.32s/it] 51%|#####1    | 458/893 [10:08<09:36,  1.32s/it] 51%|#####1    | 459/893 [10:10<09:37,  1.33s/it] 52%|#####1    | 460/893 [10:11<09:33,  1.32s/it] 52%|#####1    | 461/893 [10:12<09:33,  1.33s/it] 52%|#####1    | 462/893 [10:14<09:33,  1.33s/it] 52%|#####1    | 463/893 [10:15<09:30,  1.33s/it] 52%|#####1    | 464/893 [10:17<09:35,  1.34s/it] 52%|#####2    | 465/893 [10:18<09:29,  1.33s/it] 52%|#####2    | 466/893 [10:19<09:29,  1.33s/it] 52%|#####2    | 467/893 [10:20<09:28,  1.33s/it] 52%|#####2    | 468/893 [10:22<09:26,  1.33s/it] 53%|#####2    | 469/893 [10:23<09:25,  1.33s/it] 53%|#####2    | 470/893 [10:25<09:28,  1.35s/it] 53%|#####2    | 471/893 [10:26<09:27,  1.34s/it] 53%|#####2    | 472/893 [10:27<09:25,  1.34s/it] 53%|#####2    | 473/893 [10:29<09:19,  1.33s/it] 53%|#####3    | 474/893 [10:30<09:17,  1.33s/it] 53%|#####3    | 475/893 [10:31<09:13,  1.32s/it] 53%|#####3    | 476/893 [10:32<09:11,  1.32s/it] 53%|#####3    | 477/893 [10:34<09:11,  1.33s/it] 54%|#####3    | 478/893 [10:35<09:12,  1.33s/it] 54%|#####3    | 479/893 [10:36<09:09,  1.33s/it] 54%|#####3    | 480/893 [10:38<09:07,  1.33s/it] 54%|#####3    | 481/893 [10:39<09:06,  1.33s/it] 54%|#####3    | 482/893 [10:40<09:08,  1.33s/it] 54%|#####4    | 483/893 [10:42<09:03,  1.33s/it] 54%|#####4    | 484/893 [10:43<09:03,  1.33s/it] 54%|#####4    | 485/893 [10:44<08:59,  1.32s/it] 54%|#####4    | 486/893 [10:46<09:06,  1.34s/it] 55%|#####4    | 487/893 [10:47<09:03,  1.34s/it] 55%|#####4    | 488/893 [10:48<09:00,  1.33s/it] 55%|#####4    | 489/893 [10:50<08:56,  1.33s/it] 55%|#####4    | 490/893 [10:51<08:53,  1.32s/it] 55%|#####4    | 491/893 [10:52<08:50,  1.32s/it] 55%|#####5    | 492/893 [10:54<08:50,  1.32s/it] 55%|#####5    | 493/893 [10:55<08:49,  1.32s/it] 55%|#####5    | 494/893 [10:56<08:46,  1.32s/it] 55%|#####5    | 495/893 [10:58<08:45,  1.32s/it] 56%|#####5    | 496/893 [10:59<08:43,  1.32s/it] 56%|#####5    | 497/893 [11:00<08:40,  1.32s/it] 56%|#####5    | 498/893 [11:02<08:41,  1.32s/it] 56%|#####5    | 499/893 [11:03<08:40,  1.32s/it] 56%|#####5    | 500/893 [11:04<08:40,  1.32s/it] 56%|#####6    | 501/893 [11:06<08:35,  1.32s/it] 56%|#####6    | 502/893 [11:07<08:36,  1.32s/it] 56%|#####6    | 503/893 [11:08<08:37,  1.33s/it] 56%|#####6    | 504/893 [11:10<08:33,  1.32s/it] 57%|#####6    | 505/893 [11:11<08:32,  1.32s/it] 57%|#####6    | 506/893 [11:12<08:31,  1.32s/it] 57%|#####6    | 507/893 [11:14<08:32,  1.33s/it] 57%|#####6    | 508/893 [11:15<08:34,  1.34s/it] 57%|#####6    | 509/893 [11:16<08:29,  1.33s/it] 57%|#####7    | 510/893 [11:18<08:33,  1.34s/it] 57%|#####7    | 511/893 [11:19<08:29,  1.33s/it] 57%|#####7    | 512/893 [11:20<08:24,  1.32s/it] 57%|#####7    | 513/893 [11:22<08:24,  1.33s/it] 58%|#####7    | 514/893 [11:23<08:19,  1.32s/it] 58%|#####7    | 515/893 [11:24<08:19,  1.32s/it] 58%|#####7    | 516/893 [11:26<08:21,  1.33s/it] 58%|#####7    | 517/893 [11:27<08:20,  1.33s/it] 58%|#####8    | 518/893 [11:28<08:17,  1.33s/it] 58%|#####8    | 519/893 [11:29<08:14,  1.32s/it] 58%|#####8    | 520/893 [11:31<08:13,  1.32s/it] 58%|#####8    | 521/893 [11:32<08:12,  1.32s/it] 58%|#####8    | 522/893 [11:33<08:10,  1.32s/it] 59%|#####8    | 523/893 [11:35<08:15,  1.34s/it] 59%|#####8    | 524/893 [11:36<08:11,  1.33s/it] 59%|#####8    | 525/893 [11:37<08:13,  1.34s/it] 59%|#####8    | 526/893 [11:39<08:10,  1.34s/it] 59%|#####9    | 527/893 [11:40<08:07,  1.33s/it] 59%|#####9    | 528/893 [11:41<08:04,  1.33s/it] 59%|#####9    | 529/893 [11:43<08:03,  1.33s/it] 59%|#####9    | 530/893 [11:44<08:03,  1.33s/it] 59%|#####9    | 531/893 [11:45<08:02,  1.33s/it] 60%|#####9    | 532/893 [11:47<08:01,  1.33s/it] 60%|#####9    | 533/893 [11:48<07:56,  1.32s/it] 60%|#####9    | 534/893 [11:49<07:55,  1.32s/it] 60%|#####9    | 535/893 [11:51<07:54,  1.33s/it] 60%|######    | 536/893 [11:52<07:50,  1.32s/it] 60%|######    | 537/893 [11:53<07:49,  1.32s/it] 60%|######    | 538/893 [11:55<07:50,  1.33s/it] 60%|######    | 539/893 [11:56<07:50,  1.33s/it] 60%|######    | 540/893 [11:57<07:52,  1.34s/it] 61%|######    | 541/893 [11:59<07:48,  1.33s/it] 61%|######    | 542/893 [12:00<07:48,  1.33s/it] 61%|######    | 543/893 [12:01<07:43,  1.33s/it] 61%|######    | 544/893 [12:03<07:44,  1.33s/it] 61%|######1   | 545/893 [12:04<07:43,  1.33s/it] 61%|######1   | 546/893 [12:05<07:41,  1.33s/it] 61%|######1   | 547/893 [12:07<07:39,  1.33s/it] 61%|######1   | 548/893 [12:08<07:37,  1.32s/it] 61%|######1   | 549/893 [12:09<07:36,  1.33s/it] 62%|######1   | 550/893 [12:11<07:34,  1.33s/it] 62%|######1   | 551/893 [12:12<07:32,  1.32s/it] 62%|######1   | 552/893 [12:13<07:32,  1.33s/it] 62%|######1   | 553/893 [12:15<07:32,  1.33s/it] 62%|######2   | 554/893 [12:16<07:32,  1.33s/it] 62%|######2   | 555/893 [12:17<07:31,  1.33s/it] 62%|######2   | 556/893 [12:19<07:27,  1.33s/it] 62%|######2   | 557/893 [12:20<07:26,  1.33s/it] 62%|######2   | 558/893 [12:21<07:26,  1.33s/it] 63%|######2   | 559/893 [12:23<07:26,  1.34s/it] 63%|######2   | 560/893 [12:24<07:25,  1.34s/it] 63%|######2   | 561/893 [12:25<07:22,  1.33s/it] 63%|######2   | 562/893 [12:27<07:16,  1.32s/it] 63%|######3   | 563/893 [12:28<07:14,  1.32s/it] 63%|######3   | 564/893 [12:29<07:16,  1.33s/it] 63%|######3   | 565/893 [12:31<07:19,  1.34s/it] 63%|######3   | 566/893 [12:32<07:15,  1.33s/it] 63%|######3   | 567/893 [12:33<07:11,  1.32s/it] 64%|######3   | 568/893 [12:35<07:11,  1.33s/it] 64%|######3   | 569/893 [12:36<07:09,  1.33s/it] 64%|######3   | 570/893 [12:37<07:09,  1.33s/it] 64%|######3   | 571/893 [12:39<07:07,  1.33s/it] 64%|######4   | 572/893 [12:40<07:08,  1.33s/it] 64%|######4   | 573/893 [12:41<07:05,  1.33s/it] 64%|######4   | 574/893 [12:43<07:03,  1.33s/it] 64%|######4   | 575/893 [12:44<07:01,  1.32s/it] 65%|######4   | 576/893 [12:45<07:03,  1.33s/it] 65%|######4   | 577/893 [12:47<07:03,  1.34s/it] 65%|######4   | 578/893 [12:48<07:02,  1.34s/it] 65%|######4   | 579/893 [12:49<07:01,  1.34s/it] 65%|######4   | 580/893 [12:51<07:00,  1.34s/it] 65%|######5   | 581/893 [12:52<06:57,  1.34s/it] 65%|######5   | 582/893 [12:53<06:52,  1.33s/it] 65%|######5   | 583/893 [12:55<06:51,  1.33s/it] 65%|######5   | 584/893 [12:56<06:52,  1.33s/it] 66%|######5   | 585/893 [12:57<06:49,  1.33s/it] 66%|######5   | 586/893 [12:59<06:47,  1.33s/it] 66%|######5   | 587/893 [13:00<06:45,  1.33s/it] 66%|######5   | 588/893 [13:01<06:45,  1.33s/it] 66%|######5   | 589/893 [13:03<06:44,  1.33s/it] 66%|######6   | 590/893 [13:04<06:41,  1.33s/it] 66%|######6   | 591/893 [13:05<06:37,  1.32s/it] 66%|######6   | 592/893 [13:07<06:36,  1.32s/it] 66%|######6   | 593/893 [13:08<06:34,  1.32s/it] 67%|######6   | 594/893 [13:09<06:35,  1.32s/it] 67%|######6   | 595/893 [13:11<06:35,  1.33s/it] 67%|######6   | 596/893 [13:12<06:34,  1.33s/it] 67%|######6   | 597/893 [13:13<06:36,  1.34s/it] 67%|######6   | 598/893 [13:15<06:34,  1.34s/it] 67%|######7   | 599/893 [13:16<06:30,  1.33s/it] 67%|######7   | 600/893 [13:17<06:27,  1.32s/it] 67%|######7   | 601/893 [13:19<06:28,  1.33s/it] 67%|######7   | 602/893 [13:20<06:28,  1.34s/it] 68%|######7   | 603/893 [13:21<06:26,  1.33s/it] 68%|######7   | 604/893 [13:22<06:22,  1.32s/it] 68%|######7   | 605/893 [13:24<06:21,  1.33s/it] 68%|######7   | 606/893 [13:25<06:19,  1.32s/it] 68%|######7   | 607/893 [13:26<06:19,  1.33s/it] 68%|######8   | 608/893 [13:28<06:15,  1.32s/it] 68%|######8   | 609/893 [13:29<06:14,  1.32s/it] 68%|######8   | 610/893 [13:30<06:15,  1.33s/it] 68%|######8   | 611/893 [13:32<06:13,  1.32s/it] 69%|######8   | 612/893 [13:33<06:09,  1.32s/it] 69%|######8   | 613/893 [13:34<06:09,  1.32s/it] 69%|######8   | 614/893 [13:36<06:10,  1.33s/it] 69%|######8   | 615/893 [13:37<06:08,  1.33s/it] 69%|######8   | 616/893 [13:38<06:08,  1.33s/it] 69%|######9   | 617/893 [13:40<06:06,  1.33s/it] 69%|######9   | 618/893 [13:41<06:04,  1.32s/it]                                                 [33mTraceback (Most recent call last):
+[31m[1m156[0m train_dcunet.py[0m                                                                                [1m[32m<module>[0m    [33m--> [1mtrainer.train(step=args.num_step, validation_interval=args.validation_interval)[0m                       
+[31m[1m219[0m /home/azureuser/anaconda3/envs/coco/lib/python3.6/site-packages/PinkBlack/trainer.py[0m           [1m[32mtrain[0m       [33m--> [1mself.config[f'{phase}_loss'], self.config[f'{phase}_metric'] = self._train(phase, num_steps=num_steps)[0m
+[31m[1m331[0m /home/azureuser/anaconda3/envs/coco/lib/python3.6/site-packages/PinkBlack/trainer.py[0m           [1m[32m_train[0m      [33m--> [1mresults = self._step(phase=phase, iterator=step_iterator)[0m                                             
+[31m[1m264[0m /home/azureuser/anaconda3/envs/coco/lib/python3.6/site-packages/PinkBlack/trainer.py[0m           [1m[32m_step[0m       [33m--> [1mbatch_dict = next(iterator)[0m                                                                           
+[31m[1m560[0m /home/azureuser/anaconda3/envs/coco/lib/python3.6/site-packages/torch/utils/data/dataloader.py[0m [1m[32m__next__[0m    [33m--> [1mbatch = self.collate_fn([self.dataset[i] for i in indices])[0m                                           
+[31m[1m560[0m /home/azureuser/anaconda3/envs/coco/lib/python3.6/site-packages/torch/utils/data/dataloader.py[0m [1m[32m<listcomp>[0m  [33m--> [1mbatch = self.collate_fn([self.dataset[i] for i in indices])[0m                                           
+[31m[1m59[0m  /home/azureuser/env/DeepComplexUNetPyTorch8000-enhanced1/DCUNet/sedataset.py[0m                   [1m[32m__getitem__[0m [33m--> [1mz = x - y[0m                                                                                             
+[31m[1mRuntimeError: The size of tensor a (330796) must match the size of tensor b (3162720) at non-singleton dimension 1
+> /home/azureuser/env/DeepComplexUNetPyTorch8000-enhanced1/DCUNet/sedataset.py(59)__getitem__()
+-> z = x - y
+(Pdb) Error in sys.excepthook:
+Traceback (most recent call last):
+  File "/home/azureuser/anaconda3/envs/coco/lib/python3.6/pdb.py", line 321, in _cmdloop
+    self.cmdloop()
+  File "/home/azureuser/anaconda3/envs/coco/lib/python3.6/cmd.py", line 126, in cmdloop
+    line = input(self.prompt)
+OSError: [Errno 9] Bad file descriptor
+
+Original exception was:
+Traceback (most recent call last):
+  File "train_dcunet.py", line 156, in <module>
+    trainer.train(step=args.num_step, validation_interval=args.validation_interval)
+  File "/home/azureuser/anaconda3/envs/coco/lib/python3.6/site-packages/PinkBlack/trainer.py", line 219, in train
+    self.config[f'{phase}_loss'], self.config[f'{phase}_metric'] = self._train(phase, num_steps=num_steps)
+  File "/home/azureuser/anaconda3/envs/coco/lib/python3.6/site-packages/PinkBlack/trainer.py", line 331, in _train
+    results = self._step(phase=phase, iterator=step_iterator)
+  File "/home/azureuser/anaconda3/envs/coco/lib/python3.6/site-packages/PinkBlack/trainer.py", line 264, in _step
+    batch_dict = next(iterator)
+  File "/home/azureuser/anaconda3/envs/coco/lib/python3.6/site-packages/torch/utils/data/dataloader.py", line 560, in __next__
+    batch = self.collate_fn([self.dataset[i] for i in indices])
+  File "/home/azureuser/anaconda3/envs/coco/lib/python3.6/site-packages/torch/utils/data/dataloader.py", line 560, in <listcomp>
+    batch = self.collate_fn([self.dataset[i] for i in indices])
+  File "/home/azureuser/env/DeepComplexUNetPyTorch8000-enhanced1/DCUNet/sedataset.py", line 59, in __getitem__
+    z = x - y
+RuntimeError: The size of tensor a (330796) must match the size of tensor b (3162720) at non-singleton dimension 1
